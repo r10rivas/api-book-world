@@ -20,6 +20,8 @@
 #
 class Writer < ApplicationRecord
   belongs_to :country
+  has_many :book_writers
+  has_many :books, through: :book_writers
 
   validates :first_name, :last_name, :date_birth, presence: true
 end

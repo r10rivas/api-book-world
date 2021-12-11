@@ -21,6 +21,8 @@ class Book < ApplicationRecord
   belongs_to :editorial
   has_many :book_genres
   has_many :genres, through: :book_genres
+  has_many :book_writers
+  has_many :writers, through: :book_writers
 
   validates :title, :publication_date, presence: true
   validate :validate_genres_assignment

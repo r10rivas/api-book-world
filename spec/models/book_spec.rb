@@ -45,5 +45,9 @@ RSpec.describe Book, type: :model do
     it 'Relation with genre (has_many)' do
       should have_many(:genres).through(:book_genres)
     end
+
+    it 'Relation with writer (has_many)' do
+      should have_many(:writers).through(:book_writers)
+    end
   end
 end

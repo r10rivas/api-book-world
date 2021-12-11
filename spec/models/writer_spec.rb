@@ -39,5 +39,9 @@ RSpec.describe Writer, type: :model do
     it 'Relation with country (belongs_to)' do
       should belong_to(:country)
     end
+
+    it 'Relation with writer (has_many)' do
+      should have_many(:books).through(:book_writers)
+    end
   end
 end
