@@ -9,6 +9,7 @@
 #
 class Country < ApplicationRecord
   has_many :editorials
+  has_many :writers
 
   validates :name, presence: true
 end

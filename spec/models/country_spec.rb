@@ -20,5 +20,9 @@ RSpec.describe Country, type: :model do
     it 'Relation with editorial (has_many)' do
       should have_many(:editorials)
     end
+
+    it 'Relation with writer (has_many)' do
+      should have_many(:writers)
+    end
   end
 end
