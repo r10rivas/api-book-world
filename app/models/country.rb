@@ -8,5 +8,7 @@
 #  updated_at :datetime         not null
 #
 class Country < ApplicationRecord
+  has_many :editorials
+
   validates :name, presence: true
 end
