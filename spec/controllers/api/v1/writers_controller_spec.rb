@@ -31,8 +31,8 @@ RSpec.describe Api::V1::WritersController, type: :controller do
       context 'Data in response writer (books)' do
         subject { response_payload[:writers] }
 
-        it { is_expected.to all(include(:id, :first_name, :last_name, :date_birth, :country, :books)) }
-        it { is_expected.to all( include(books: be_an(Array)) ) }
+        it { is_expected.to all(include(:id, :title, :publication_date, :editorial, :genres, :writers)) }
+        it { is_expected.to all( include(writers: be_an(Array)) ) }
       end
     end
 
