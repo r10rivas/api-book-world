@@ -25,4 +25,13 @@ RSpec.describe Api::V1::WritersController, type: :routing do
       id: '1'
     )
   end
+
+  it '#update' do
+    expect(put: 'api/v1/writers/1').to route_to(
+      format: 'json',
+      controller: 'api/v1/writers',
+      action: 'update',
+      id: '1'
+    )
+  end
 end

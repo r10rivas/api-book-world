@@ -17,6 +17,16 @@ class Api::V1::WritersController < ApplicationController
     @writer = Writer.find_by(id: params[:id])
   end
 
+  def update
+    @writer = Writer.find_by(id: params[:id])
+
+    if @writer.update(writer_params)
+      render :show, status: :ok
+    else
+      render json: { errors: @writer.errors.full_messages }, status: :bad_request
+    end
+  end
+
   private
 
   def writer_params
