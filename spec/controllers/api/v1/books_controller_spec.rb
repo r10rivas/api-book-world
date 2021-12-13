@@ -47,4 +47,50 @@ RSpec.describe Api::V1::BooksController, type: :controller do
       end
     end
   end
+
+  describe '#show' do
+    let(:user) { create(:user) }
+    let(:token) { JsonWebToken.encode(user_id: user.id) }
+    let(:headers) { { Authorization: token } }
+    let(:writers) { create_list(:writer, 10) }
+    let(:genres) { create_list(:genre, 10) }
+    let(:book) { create(:book, writers: writers.sample(3), genres: genres.sample(2)) }
+
+    context 'When successful' do
+      before do
+        request.headers.merge!(headers)
+
+        get(:show, format: 'json', params: { id: book.id })
+      end
+
+      context 'Response status ok' do
+        subject { response }
+
+        it { is_expected.to have_http_status(:ok) }
+      end
+
+      context 'Data in response (book)' do
+        subject { response_payload }
+
+        it { is_expected.to include(:id, :title, :publication_date, :editorial, :writers) }
+      end
+
+      context 'Data in response of book (books)' do
+        subject { response_payload[:writers] }
+
+        it { is_expected.to all(include(:full_name, :country)) }
+      end
+    end
+
+    context 'When it fails by token' do
+      before do
+        get(:show, format: 'json', params: { id: book.id } )
+      end
+
+      context 'Status reponse no authorize' do
+        subject { response }
+        it { is_expected.to have_http_status(:unauthorized) }
+      end
+    end
+  end
 end
