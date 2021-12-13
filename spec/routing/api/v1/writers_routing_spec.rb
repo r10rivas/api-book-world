@@ -8,4 +8,13 @@ RSpec.describe Api::V1::WritersController, type: :routing do
       action: 'index'
     )
   end
+
+  it "#show" do
+    expect(get: 'api/v1/writers/1').to route_to(
+      format: 'json',
+      controller: 'api/v1/writers',
+      action: 'show',
+      id: '1'
+    )
+  end
 end
