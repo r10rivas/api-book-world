@@ -10,10 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_11_020016) do
+ActiveRecord::Schema.define(version: 2021_12_11_205307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "book_genres", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "genre_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_genres_on_book_id"
+    t.index ["genre_id"], name: "index_book_genres_on_genre_id"
+  end
+
+  create_table "book_writers", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "writer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_book_writers_on_book_id"
+    t.index ["writer_id"], name: "index_book_writers_on_writer_id"
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.date "publication_date"
+    t.bigint "editorial_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["editorial_id"], name: "index_books_on_editorial_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "editorials", force: :cascade do |t|
+    t.string "name"
+    t.bigint "country_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_editorials_on_country_id"
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -22,4 +69,21 @@ ActiveRecord::Schema.define(version: 2021_12_11_020016) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "writers", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.date "date_birth"
+    t.bigint "country_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_writers_on_country_id"
+  end
+
+  add_foreign_key "book_genres", "books"
+  add_foreign_key "book_genres", "genres"
+  add_foreign_key "book_writers", "books"
+  add_foreign_key "book_writers", "writers"
+  add_foreign_key "books", "editorials"
+  add_foreign_key "editorials", "countries"
+  add_foreign_key "writers", "countries"
 end
